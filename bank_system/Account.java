@@ -10,6 +10,16 @@ public class Account {
         this.accountNumber = accountNumber;
         this.balance = initialDeposit;
     }
+    public Account(String ownerName) {
+        this.ownerName = ownerName;
+        
+    }
+    public Account(String ownerName, double balance) {
+        this.ownerName = ownerName;
+        this.balance = balance;
+        
+    }
+
 
     public int getAccountNumber() {
         return accountNumber;
