@@ -1,5 +1,4 @@
 package atm_system;
-
 public class User {
     private String pin;
     private double balance;
@@ -35,3 +34,5 @@ public class User {
         }
     }
 }
+
+

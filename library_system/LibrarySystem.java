@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class LibrarySystem {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        Library library = new Library(5); // Max 5 books
+        Library library = new Library(5);
 
         while (true) {
             System.out.println("\n--- Library Menu ---");

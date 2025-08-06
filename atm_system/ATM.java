@@ -1,5 +1,4 @@
 package atm_system;
-
 import java.util.Scanner;
 
 public class ATM {
@@ -11,7 +10,7 @@ public class ATM {
         this.failedAttempts = new int[users.length];
     }
 
-    private int validatePin(String enteredPin) {
+    private int findUserByPin(String enteredPin) {
         for (int i = 0; i < users.length; i++) {
             if (users[i] != null && users[i].getPin().equals(enteredPin)) {
                 return i;
@@ -23,48 +22,60 @@ public class ATM {
     public void start() {
         Scanner sc = new Scanner(System.in);
 
-        System.out.print("Enter your PIN: ");
-        String pin = sc.nextLine();
-        int index = validatePin(pin);
-
-        if (index == -1) {
-            System.out.println("Invalid PIN!");
-            return;
-        }
-
-        if (failedAttempts[index] >= 3) {
-            System.out.println("Account locked due to too many failed attempts.");
-            return;
-        }
-
         while (true) {
-            System.out.println("\n--- ATM Menu ---");
-            System.out.println("1. Check Balance");
-            System.out.println("2. Deposit");
-            System.out.println("3. Withdraw");
-            System.out.println("4. Exit");
-            System.out.print("Enter choice: ");
-            int choice = sc.nextInt();
+            System.out.print("\nEnter your PIN (or type EXIT to quit): ");
+            String enteredPin = sc.nextLine();
 
-            switch (choice) {
-                case 1:
-                    System.out.println("Current Balance: ₹" + users[index].getBalance());
-                    break;
-                case 2:
-                    System.out.print("Enter deposit amount: ");
-                    double dep = sc.nextDouble();
-                    users[index].deposit(dep);
-                    break;
-                case 3:
-                    System.out.print("Enter withdrawal amount: ");
-                    double with = sc.nextDouble();
-                    users[index].withdraw(with);
-                    break;
-                case 4:
-                    System.out.println("Thank you for using ATM!");
-                    return;
-                default:
-                    System.out.println("Invalid choice!");
+            if (enteredPin.equalsIgnoreCase("exit")) {
+                System.out.println("Exiting ATM...");
+                break;
+            }
+
+            int userIndex = findUserByPin(enteredPin);
+
+            if (userIndex == -1) {
+                System.out.println("Invalid PIN!");
+                continue;
+            }
+
+            if (failedAttempts[userIndex] >= 3) {
+                System.out.println("Account locked due to too many failed attempts.");
+                continue;
+            }
+
+            // Login Successful → Show menu
+            while (true) {
+                System.out.println("\n--- ATM Menu ---");
+                System.out.println("1. Check Balance");
+                System.out.println("2. Deposit");
+                System.out.println("3. Withdraw");
+                System.out.println("4. Logout");
+                System.out.print("Enter choice: ");
+                int choice = sc.nextInt();
+
+                switch (choice) {
+                    case 1:
+                        System.out.println("Current Balance: ₹" + users[userIndex].getBalance());
+                        break;
+                    case 2:
+                        System.out.print("Enter deposit amount: ");
+                        double dep = sc.nextDouble();
+                        users[userIndex].deposit(dep);
+                        break;
+                    case 3:
+                        System.out.print("Enter withdrawal amount: ");
+                        double with = sc.nextDouble();
+                        users[userIndex].withdraw(with);
+                        break;
+                    case 4:
+                        System.out.println("Logging out...");
+                        sc.nextLine(); // clear buffer
+                        break;
+                    default:
+                        System.out.println("Invalid choice!");
+                }
+
+                if (choice == 4) break;
             }
         }
     }
