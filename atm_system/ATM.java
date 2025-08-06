@@ -35,7 +35,7 @@ public class ATM {
 
             if (userIndex == -1) {
                 System.out.println("Invalid PIN!");
-                continue;
+                continue; 
             }
 
             if (failedAttempts[userIndex] >= 3) {
@@ -43,7 +43,17 @@ public class ATM {
                 continue;
             }
 
-            // Login Successful → Show menu
+            
+            if (!users[userIndex].getPin().equals(enteredPin)) {
+                failedAttempts[userIndex]++;
+                System.out.println("Incorrect PIN! Attempt " + failedAttempts[userIndex] + "/3");
+                continue;
+            }
+
+            
+            failedAttempts[userIndex] = 0;
+
+            
             while (true) {
                 System.out.println("\n--- ATM Menu ---");
                 System.out.println("1. Check Balance");

@@ -2,7 +2,7 @@ package atm_system;
 
 public class MiniATMSystem {
     public static void main(String[] args) {
-        // Predefined users with PIN and balance
+      
         User[] users = new User[5];
         users[0] = new User("1234", 5000);
         users[1] = new User("1111", 3000);
